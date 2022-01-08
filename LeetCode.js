@@ -19,35 +19,27 @@
 // output = [0, 1]
 
 
-
-const test_case = "(}" 
+const test_case = "[]" 
 
 const isValid = (s) => {
-    if (s === null || s.length <= 0){
-        return true;
+    let map = {
+        '(':')',
+        '{':'}',
+        '[':']',
     }
-    let cArray = s.split('');
     let stack = [];
-    cArray.forEach(char => {
-        if (char === '[') {
-            stack.push(']');
-        } else if (char === '{') {
-            stack.push('}')
-        } else if (char === '(') {
-            stack.push(')')
-        } else if (stack.length === 0 || stack.includes(char)) {
-            stack.filter(element => {
-                if(element === char){
-                    let index = stack.indexOf(char);
-                    stack.splice(index, 1);
-                }
-                return false;
-            })
+    for (let char of s) {
+        if(map[char]) {
+            stack.push(map[char]);
+        } else if (char !== stack.pop()){
+            return false;
         }
-    })               
+    }
     if (stack.length === 0) {
         return true;
+    } else {
+        return false;
     }
-}
+};
 
 console.log(isValid(test_case))
